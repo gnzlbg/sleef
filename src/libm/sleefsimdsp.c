@@ -382,7 +382,7 @@ static INLINE CONST dfi_t rempif(vfloat a) {
   x = dfadd2_vf2_vf2_vf2(x, y);
   x = dfnormalize_vf2_vf2(x);
   x = dfmul_vf2_vf2_vf2(x, vcast_vf2_f_f(3.1415927410125732422f*2, -8.7422776573475857731e-08f*2));
-  x = vsel_vf2_vo_vf2_vf2(vlt_vo_vf_vf(vabs_vf_vf(a), vcast_vf_f(0.7)), vcast_vf2_vf_vf(a, vcast_vf_f(0)), x);
+  x = vsel_vf2_vo_vf2_vf2(vlt_vo_vf_vf(vabs_vf_vf(a), vcast_vf_f(0.7f)), vcast_vf2_vf_vf(a, vcast_vf_f(0)), x);
   dfi_t ret = { x, q };
   return ret;
 }

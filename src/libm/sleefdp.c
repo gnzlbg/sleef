@@ -795,6 +795,7 @@ EXPORT CONST double xsin(double d) {
 					  mulsign(1.2246467991473532072e-16*-0.5, ddi.dd.x)));
     }
     d = ddi.dd.x + ddi.dd.y;
+    if (xisinf(t) || xisnan(t)) d = SLEEF_NAN;
   }
 
   s = d * d;
@@ -846,6 +847,7 @@ EXPORT CONST double xsin_u1(double d) {
 					  mulsign(1.2246467991473532072e-16*-0.5, ddi.dd.x)));
     }
     s = ddnormalize_d2_d2(ddi.dd);
+    if (xisinf(d) || xisnan(d)) s.x = SLEEF_NAN;
   }
 
   t = s;
@@ -897,6 +899,7 @@ EXPORT CONST double xcos(double d) {
 					  mulsign(1.2246467991473532072e-16*-0.5, ddi.dd.x > 0 ? 1 : -1)));
     }
     d = ddi.dd.x + ddi.dd.y;
+    if (xisinf(t) || xisnan(t)) d = SLEEF_NAN;
   }
   
   s = d * d;
@@ -949,6 +952,7 @@ EXPORT CONST double xcos_u1(double d) {
 					  mulsign(1.2246467991473532072e-16*-0.5, ddi.dd.x > 0 ? 1 : -1)));
     }
     s = ddnormalize_d2_d2(ddi.dd);
+    if (xisinf(d) || xisnan(d)) s.x = SLEEF_NAN;
   }
   
   t = s;
@@ -998,7 +1002,7 @@ EXPORT CONST Sleef_double2 xsincos(double d) {
     ql = ddi.i;
     s = ddi.dd.x + ddi.dd.y;
 
-    if (xisinf(d)) s = SLEEF_NAN;
+    if (xisinf(d) || xisnan(d)) s = SLEEF_NAN;
   }  
 
   t = s;
@@ -1059,7 +1063,7 @@ EXPORT CONST Sleef_double2 xsincos_u1(double d) {
     ql = ddi.i;
     s = ddi.dd;
 
-    if (xisinf(d)) s = dd(SLEEF_NAN, SLEEF_NAN);
+    if (xisinf(d) || xisnan(d)) s = dd(SLEEF_NAN, SLEEF_NAN);
   }
   
   t = s;
@@ -1316,7 +1320,7 @@ EXPORT CONST double xtan(double d) {
     ddi_t ddi = rempi(d);
     ql = ddi.i;
     x = ddi.dd.x + ddi.dd.y;
-    if (xisinf(d)) x = SLEEF_NAN;
+    if (xisinf(d) || xisnan(d)) x = SLEEF_NAN;
   }
   
   s = x * x;
@@ -1373,7 +1377,7 @@ EXPORT CONST double xtan_u1(double d) {
     ql = ddi.i;
     s = ddi.dd;
 
-    if (xisinf(d)) s = dd(SLEEF_NAN, SLEEF_NAN);
+    if (xisinf(d) || xisnan(d)) s.x = SLEEF_NAN;
   }
   
   if ((ql & 1) != 0) s = ddneg_d2_d2(s);
