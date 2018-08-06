@@ -745,7 +745,8 @@ static CONST ddi_t rempi(double a) {
   Sleef_double2 x, y, z;
   di_t di;
   double t;
-  int ex = ilogb2k(a) - 55, q;
+  int ex = ilogb2k(a) - 55, q = ex > (700-55) ? -64 : 0;
+  a = ldexp3k(a, q);
   if (ex < 0) ex = 0;
   ex *= 4;
   x = ddmul_d2_d_d(a, rempitabdp[ex]);
@@ -794,8 +795,6 @@ EXPORT CONST double xsin(double d) {
 					  mulsign(1.2246467991473532072e-16*-0.5, ddi.dd.x)));
     }
     d = ddi.dd.x + ddi.dd.y;
-
-    if (fabsk(t) > 1e+299 && !xisinf(t)) d = 0;
   }
 
   s = d * d;
@@ -847,8 +846,6 @@ EXPORT CONST double xsin_u1(double d) {
 					  mulsign(1.2246467991473532072e-16*-0.5, ddi.dd.x)));
     }
     s = ddnormalize_d2_d2(ddi.dd);
-
-    if (fabsk(d) > 1e+299 && !xisinf(d)) s = dd(0, 0);
   }
 
   t = s;
@@ -900,8 +897,6 @@ EXPORT CONST double xcos(double d) {
 					  mulsign(1.2246467991473532072e-16*-0.5, ddi.dd.x > 0 ? 1 : -1)));
     }
     d = ddi.dd.x + ddi.dd.y;
-
-    if (!xisinf(t) && fabsk(t) > 1e+299) d = 0;
   }
   
   s = d * d;
@@ -954,8 +949,6 @@ EXPORT CONST double xcos_u1(double d) {
 					  mulsign(1.2246467991473532072e-16*-0.5, ddi.dd.x > 0 ? 1 : -1)));
     }
     s = ddnormalize_d2_d2(ddi.dd);
-
-    if (!xisinf(d) && d > 1e+299) s = dd(0, 0);
   }
   
   t = s;
@@ -1005,7 +998,6 @@ EXPORT CONST Sleef_double2 xsincos(double d) {
     ql = ddi.i;
     s = ddi.dd.x + ddi.dd.y;
 
-    if (fabsk(d) > 1e+299) s = 0;
     if (xisinf(d)) s = SLEEF_NAN;
   }  
 
@@ -1067,7 +1059,6 @@ EXPORT CONST Sleef_double2 xsincos_u1(double d) {
     ql = ddi.i;
     s = ddi.dd;
 
-    if (fabsk(d) > 1e+299) s = dd(0, 0);
     if (xisinf(d)) s = dd(SLEEF_NAN, SLEEF_NAN);
   }
   
